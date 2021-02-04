@@ -80,8 +80,16 @@ export default class ColumnResizer extends React.Component {
             newPrev += offset;
         }
 
-        ele.previousSibling.style.width = newPrev + 'px';
-        ele.nextSibling.style.width = newNext + 'px';
+        let prevSibling = ele.previousSibling;
+        let nextSibling = ele.nextSibling;
+
+        if (prevSibling) {
+            prevSibling.style.width = newPrev + 'px';
+        }
+
+        if (nextSibling) {
+            nextSibling.style.width = newNext + 'px';
+        }
     }
 
     componentDidMount() {
