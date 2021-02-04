@@ -107,7 +107,7 @@ function (_React$Component) {
         var offset = newPrev - this.props.minWidth;
         newPrev = this.props.minWidth;
         newNext += offset;
-      } else if (newNext < this.props.minWidth && this.props.hasWidthContraint) {
+      } else if (newNext < this.props.minWidth && this.props.hasWidthConstraint) {
         var _offset = newNext - this.props.minWidth;
 
         newNext = this.props.minWidth;
@@ -123,7 +123,7 @@ function (_React$Component) {
         prevSibling.style.maxWidth = newPrev + 'px';
       }
 
-      if (nextSibling && this.props.hasWidthContraint) {
+      if (nextSibling && this.props.hasWidthConstraint) {
         nextSibling.style.width = newNext + 'px';
         nextSibling.style.minWidth = newNext + 'px';
         nextSibling.style.maxWidth = newNext + 'px';
@@ -208,11 +208,11 @@ ColumnResizer.defaultProps = {
   disabled: false,
   minWidth: 0,
   className: "",
-  hasWidthContraint: true
+  hasWidthConstraint: true
 };
 ColumnResizer.propTypes = {
   disabled: _propTypes.bool,
   minWidth: _propTypes.number,
   className: _propTypes.string,
-  hasWidthContraint: _propTypes.bool
+  hasWidthConstraint: _propTypes.bool
 };
