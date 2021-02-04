@@ -85,10 +85,14 @@ export default class ColumnResizer extends React.Component {
 
         if (prevSibling) {
             prevSibling.style.width = newPrev + 'px';
+            prevSibling.style.minWidth = newPrev + 'px';
+            prevSibling.style.maxWidth = newPrev + 'px';
         }
 
         if (nextSibling) {
             nextSibling.style.width = newNext + 'px';
+            nextSibling.style.minWidth = newNext + 'px';
+            nextSibling.style.maxWidth = newNext + 'px';
         }
     }
 
