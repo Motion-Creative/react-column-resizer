@@ -43,11 +43,6 @@ function (_React$Component) {
     _this.startDrag = _this.startDrag.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.endDrag = _this.endDrag.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.onMouseMove = _this.onMouseMove.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-
-    if (props.disabled) {
-      return _possibleConstructorReturn(_this);
-    }
-
     _this.dragging = false;
     _this.mouseX = 0;
     _this.startPos = 0;
@@ -119,8 +114,20 @@ function (_React$Component) {
         newPrev += _offset;
       }
 
-      ele.previousSibling.style.width = newPrev + 'px';
-      ele.nextSibling.style.width = newNext + 'px';
+      var prevSibling = ele.previousSibling;
+      var nextSibling = ele.nextSibling;
+
+      if (prevSibling) {
+        prevSibling.style.width = newPrev + 'px';
+        prevSibling.style.minWidth = newPrev + 'px';
+        prevSibling.style.maxWidth = newPrev + 'px';
+      }
+
+      if (nextSibling) {
+        nextSibling.style.width = newNext + 'px';
+        nextSibling.style.minWidth = newNext + 'px';
+        nextSibling.style.maxWidth = newNext + 'px';
+      }
     }
   }, {
     key: "componentDidMount",
@@ -129,10 +136,7 @@ function (_React$Component) {
         return;
       }
 
-      document.addEventListener('mousemove', this.onMouseMove);
-      document.addEventListener('mouseup', this.endDrag);
-      document.addEventListener("touchmove", this.onMouseMove);
-      document.addEventListener("touchend", this.endDrag);
+      this.addEventListenersToDocument();
     }
   }, {
     key: "componentWillUnmount",
@@ -141,6 +145,30 @@ function (_React$Component) {
         return;
       }
 
+      this.removeEventListenersFromDocument();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevProps.disabled && !this.props.disabled) {
+        this.addEventListenersToDocument();
+      }
+
+      if (!prevProps.disabled && this.props.disabled) {
+        this.removeEventListenersFromDocument();
+      }
+    }
+  }, {
+    key: "addEventListenersToDocument",
+    value: function addEventListenersToDocument() {
+      document.addEventListener('mousemove', this.onMouseMove);
+      document.addEventListener('mouseup', this.endDrag);
+      document.addEventListener("touchmove", this.onMouseMove);
+      document.addEventListener("touchend", this.endDrag);
+    }
+  }, {
+    key: "removeEventListenersFromDocument",
+    value: function removeEventListenersFromDocument() {
       document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.endDrag);
       document.removeEventListener('touchmove', this.onMouseMove);
@@ -178,7 +206,7 @@ function (_React$Component) {
 exports.default = ColumnResizer;
 ColumnResizer.defaultProps = {
   disabled: false,
-  minWidth: 50,
+  minWidth: 0,
   className: ""
 };
 ColumnResizer.propTypes = {
