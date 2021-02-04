@@ -74,7 +74,7 @@ export default class ColumnResizer extends React.Component {
             const offset = newPrev - this.props.minWidth;
             newPrev = this.props.minWidth;
             newNext += offset;
-        } else if (newNext < this.props.minWidth) {
+        } else if (newNext < this.props.minWidth && this.props.hasWidthContraint) {
             const offset = newNext - this.props.minWidth;
             newNext = this.props.minWidth;
             newPrev += offset;
@@ -89,7 +89,7 @@ export default class ColumnResizer extends React.Component {
             prevSibling.style.maxWidth = newPrev + 'px';
         }
 
-        if (nextSibling) {
+        if (nextSibling && this.props.hasWidthContraint) {
             nextSibling.style.width = newNext + 'px';
             nextSibling.style.minWidth = newNext + 'px';
             nextSibling.style.maxWidth = newNext + 'px';
@@ -168,10 +168,12 @@ ColumnResizer.defaultProps = {
     disabled: false,
     minWidth: 0,
     className: "",
+    hasWidthContraint: true,
 }
 
 ColumnResizer.propTypes = {
     disabled: bool,
     minWidth: number,
     className: string,
+    hasWidthContraint: bool,
 }
